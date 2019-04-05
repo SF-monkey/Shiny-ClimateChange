@@ -8,3 +8,9 @@ Notice that I only pulled the Vancouver average Snow and Temperature measures fr
 I can make a drop-down menu for users to choose a specific Province/City, then use `grep` to filter a sub data frame for that.  
 Also, users should be able to switch to other databases of their choices, like the Canada Min/Max Temperature database.  
 I will be updating this Shiny App, if I have time…  
+
+Update:  
+Apr/04/2019  
+Added 2nd page for users to interact with Temperature data.  
+Province/City selection supported.  
+Added 3rd page for a short project description.  
