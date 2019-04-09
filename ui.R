@@ -12,34 +12,39 @@ shinyUI(fluidPage(
   
   sidebarLayout(
     sidebarPanel(
-      
-      sliderInput("years", "Select Year", min = 1979, max = 2017, value = 1979),
-      numericInput("year2", "Or Enter Year", min = 1979, max = 2017, value = 1979),
-      
-      checkboxInput("extra", strong("Add extra plot"), FALSE),
-      
       conditionalPanel(
-        condition = "input.extra == true",
-        radioButtons("dataSource", "Which variable?",
-                     c("Uncertainty" = "Uncertainty",
-                       "Vancouver Average Snow" = "AllSnow",
-                       "Vancouver Average Temperature" = "MeanTemp",
-                       "Another Year" = "2year")),
+        condition="input.conditionedPanels == 'Play'",
         
-        conditionalPanel( # For the second year
-          condition = "input.dataSource == '2year'",
-          sliderInput("years1", "Select another Year", min = 1979, max = 2017, value = 1979),
-          textInput("years2", "Enter another Year", value = 1979)
-        ),
+        sliderInput("years", "Select Year", min = 1979, max = 2017, value = 1979),
+        numericInput("year2", "Or Enter Year", min = 1979, max = 2017, value = 1979),
         
-        helpText(HTML("<h5>You might want to adjust the legend</h5>")),
-        checkboxInput("Adjust_axis", strong("Adjust legend position?"), FALSE)
+        checkboxInput("extra", strong("Add extra plot"), FALSE),
+        
+        conditionalPanel(
+          condition = "input.extra == true",
+          radioButtons("dataSource", "Which variable?",
+                       c("Uncertainty" = "Uncertainty",
+                         "Vancouver Average Snow" = "AllSnow",
+                         "Vancouver Average Temperature" = "MeanTemp",
+                         "Another Year" = "2year")),
+          
+          conditionalPanel( # For the second year
+            condition = "input.dataSource == '2year'",
+            sliderInput("years1", "Select another Year", min = 1979, max = 2017, value = 1979),
+            textInput("years2", "Enter another Year", value = 1979)
+          ),
+          
+          helpText(HTML("<h5>You might want to adjust the legend</h5>")),
+          checkboxInput("Adjust_axis", strong("Adjust legend position?"), FALSE)
+        )
       ),
       
-      hr(),
-    
-      selectInput("province", "Select province:", unique(city_data$`InfoTemp[3]`)),
-      selectInput("city", "Select city:", unique(city_data$City))
+      conditionalPanel(
+        condition="input.conditionedPanels == 'Story'",
+        
+        selectInput("province", "Select province:", unique(city_data$`InfoTemp[3]`)),
+        selectInput("city", "Select city:", unique(city_data$City))
+      )
     ),
 
     
@@ -71,7 +76,9 @@ shinyUI(fluidPage(
                   h4("It seems that the increases of CO2 level are correlated to the temperature increase in Canada."),
                   h4("on average, the temperature raises 1-2 degrees in most of the cities.")
                   ),
-         tabPanel("About",source("about.R")$value())
+         tabPanel("About",source("about.R")$value()),
+         
+         id = 'conditionedPanels'
         
        )
        
