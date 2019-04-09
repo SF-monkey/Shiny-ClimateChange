@@ -10,7 +10,7 @@ Also, users should be able to switch to other databases of their choices, like t
 I will be updating this Shiny App, if I have time…  
 
 Update:  
-Apr/08/2019
+Apr/08/2019  
 Added sidepanel for individual tabs.  
 
 Apr/04/2019  
